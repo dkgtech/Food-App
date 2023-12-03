@@ -18,9 +18,13 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeMVVM: HomeViewModel
+    private lateinit var randomMeal: Meal
 
     companion object {
         val TAG = "Home Fragment"
+        const val MEAL_ID = "com.dkgtech.foodapp.fragments.idMeal"
+        const val MEAL_NAME = "com.dkgtech.foodapp.fragments.nameMeal"
+        const val MEAL_THUMB = "com.dkgtech.foodapp.fragments.thumbMeal"
     }
 
     override fun onCreateView(
@@ -43,17 +47,20 @@ class HomeFragment : Fragment() {
     private fun onRandomMealClick() {
         binding.cardViewRandomImage.setOnClickListener {
             val intent = Intent(requireContext(), RandomMealActivity::class.java)
+            intent.putExtra(MEAL_ID, randomMeal.idMeal)
+            intent.putExtra(MEAL_NAME, randomMeal.strMeal)
+            intent.putExtra(MEAL_THUMB, randomMeal.strMealThumb)
             startActivity(intent)
         }
     }
 
     private fun observeRandomMeal() {
-        homeMVVM.observeRandomMealLiveData().observe(viewLifecycleOwner, object : Observer<Meal> {
-            override fun onChanged(value: Meal) {
-                Glide.with(this@HomeFragment).load(value.strMealThumb).into(binding.imgRandomImage)
-            }
+        homeMVVM.observeRandomMealLiveData().observe(viewLifecycleOwner
+        ) { value ->
+            Glide.with(this@HomeFragment).load(value.strMealThumb).into(binding.imgRandomImage)
 
-        })
+            this@HomeFragment.randomMeal = value
+        }
     }
 
 }

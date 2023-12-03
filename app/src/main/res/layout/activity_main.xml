@@ -21,7 +21,12 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#37FFFFFF"
+        app:itemActiveIndicatorStyle="@style/ShapeAppearance.Material3.Corner.None"
+        app:itemRippleColor="@android:color/transparent"
         app:menu="@menu/bottom_navigation_menu"
+        app:itemTextAppearanceActiveBoldEnabled="true"
+        app:itemTextAppearanceActive="@color/accent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
